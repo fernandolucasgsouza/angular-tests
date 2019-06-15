@@ -10,7 +10,7 @@
   </div>
 
   <div class="card-body">
-    <table class="table table-hover" *ngIf="cursos$ | async as cursos; else processDatas">
+    <table class="table table-hover" *ngIf="cursos$ | async as cursos; else requestDatas">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -32,8 +32,14 @@
       </tbody>
     </table>
   </div>
-  <ng-template #processDatas>
-    <h5 class="text-center">Processando dados...</h5>
+  <ng-template #requestDatas>
+    <div *ngIf="service.error$ | async; else processDatas">
+      <h6 class="text-center">Erro ao concectar ao servidor...</h6>
+    </div>
+    <ng-template #processDatas>
+      <h5 class="text-center">Processando dados...</h5>
+    </ng-template>
+
   </ng-template>
 
 </div>
