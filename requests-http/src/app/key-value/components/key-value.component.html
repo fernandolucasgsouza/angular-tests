@@ -1,0 +1,15 @@
+  <div *ngFor="let curso of cursos">
+      <ul>
+        <li *ngFor="let obj of curso | keyvalue">
+          {{ obj.key }}: {{ obj.value }}
+        </li>
+      </ul>
+    </div>
+  <div *ngFor="let curso2 of cursos">
+    {{ curso2 | json }}
+      <!-- <ul>
+        <li *ngFor="let obj2 of curso2">
+          {{ obj2 | json }}
+        </li>
+      </ul> -->
+    </div>
