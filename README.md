@@ -1,2 +1,2 @@
 
-# repositórios de teste angular
+# Repositório para testes angular
