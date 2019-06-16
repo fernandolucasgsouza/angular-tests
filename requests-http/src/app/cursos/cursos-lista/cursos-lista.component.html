@@ -33,8 +33,9 @@
     </table>
   </div>
   <ng-template #requestDatas>
+
     <div *ngIf="service.error$ | async; else processDatas">
-      <h6 class="text-center">Erro ao concectar ao servidor...</h6>
+      <h6 class="text-center">Não há dados.</h6>
     </div>
     <ng-template #processDatas>
       <h5 class="text-center">Processando dados...</h5>
