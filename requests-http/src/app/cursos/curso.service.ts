@@ -3,7 +3,7 @@ import { AlertModalComponent } from './../shared/alert-modal/alert-modal.compone
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Curso } from './cursos-lista/curso';
-import { tap, delay, catchError } from "rxjs/operators";
+import { tap, delay, catchError, take } from "rxjs/operators";
 import { environment } from 'src/environments/environment';
 import { empty, Subject } from 'rxjs';
 
@@ -29,11 +29,25 @@ export class CursoService {
         catchError(error => {
           console.error(error);
           this.error$.next(true);
-          this.alertService.showAlertDanger()
+          this.handleError();
           return empty()
         })
       );
   }
 
+  create(curso) {
+    return this.http.post(this.API, curso)
+      .pipe(
+        take(1),
+        catchError(error => {
+          console.error(error);
+          this.handleError();
+          return empty()
+        })
+      );
+  }
+  private handleError() {
+    this.alertService.showAlertDanger()
+  }
 
 }

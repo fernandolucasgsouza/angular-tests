@@ -18,22 +18,25 @@ export class AlertModalService {
 
   constructor(private modalService: BsModalService) { }
 
-  private showAlert(message: string, type: AlertTypes) {
+  private showAlert(message: string, type: AlertTypes, dismissTimeout?: number) {
     const bsModalRef: BsModalRef = this.modalService.show(AlertModalComponent);
     bsModalRef.content.type = type;
     bsModalRef.content.message = message;
+    if (dismissTimeout) {
+      setTimeout(() => bsModalRef.hide(), dismissTimeout);
+    }
   }
 
   showAlertDanger(message: string = 'Erro ao concectar ao servidor...') {
     this.showAlert(message, AlertTypes.DANGER)
   }
 
-  showAlertSuccess(message: string) {
-    this.showAlert(message, AlertTypes.SUCCESS)
+  showAlertSuccess(message: string = 'Execução concluída com sucesso!') {
+    this.showAlert(message, AlertTypes.SUCCESS, 3000)
   }
 
   showAlertPrimary(message: string) {
-    this.showAlert(message, AlertTypes.PRIMARY)
+    this.showAlert(message, AlertTypes.PRIMARY, 3000)
   }
 
   showAlertWarning(message: string) {
@@ -41,14 +44,14 @@ export class AlertModalService {
   }
 
   showAlertInfo(message: string) {
-    this.showAlert(message, AlertTypes.INFO)
+    this.showAlert(message, AlertTypes.INFO, 3000)
   }
 
   showAlertLight(message: string) {
-    this.showAlert(message, AlertTypes.LIGHT)
+    this.showAlert(message, AlertTypes.LIGHT, 3000)
   }
 
   showAlertDark(message: string) {
-    this.showAlert(message, AlertTypes.DARK)
+    this.showAlert(message, AlertTypes.DARK, 3000)
   }
 }
