@@ -3,6 +3,7 @@ import { CursoService } from './../curso.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-cursos-form',
@@ -17,13 +18,16 @@ export class CursosFormComponent implements OnInit {
     private fb: FormBuilder,
     private location: Location,
     private service: CursoService,
-    private serviceAlert: AlertModalService
+    private serviceAlert: AlertModalService,
+    private route: ActivatedRoute
   ) {
   }
 
   ngOnInit() {
+    const curso = this.route.snapshot.data['curso'];
     this.form = this.fb.group({
-      title: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(250)]]
+      id: [curso.id],
+      title: [curso.title, [Validators.required, Validators.minLength(3), Validators.maxLength(250)]]
     });
 
   }
@@ -31,7 +35,7 @@ export class CursosFormComponent implements OnInit {
   hasError(field: string) {
     return this.form.get(field).errors;
   }
-  
+
   onSubmit() {
     this.submitted = true
     this.service.create(this.form.value).subscribe(

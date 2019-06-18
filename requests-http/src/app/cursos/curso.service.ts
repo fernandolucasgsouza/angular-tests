@@ -35,6 +35,16 @@ export class CursoService {
       );
   }
 
+  getById(id) {
+    return this.http.get<Curso>(`${this.API}/${id}`)
+      .pipe(
+        take(1),
+        catchError(error => {
+          this.handleError(error.Messge);
+          return empty()
+        })
+      );
+  }
   create(curso) {
     return this.http.post(this.API, curso)
       .pipe(
@@ -46,8 +56,8 @@ export class CursoService {
         })
       );
   }
-  private handleError() {
-    this.alertService.showAlertDanger()
+  private handleError(message?: string) {
+    this.alertService.showAlertDanger(message)
   }
 
 }
