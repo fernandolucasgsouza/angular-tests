@@ -45,7 +45,8 @@ export class CursoService {
         })
       );
   }
-  create(curso) {
+
+  private create(curso) {
     return this.http.post(this.API, curso)
       .pipe(
         take(1),
@@ -56,6 +57,38 @@ export class CursoService {
         })
       );
   }
+
+  private update(curso) {
+    return this.http.put(`${this.API}/${curso.id}`, curso)
+      .pipe(
+        take(1),
+        catchError(error => {
+          console.error(error);
+          this.handleError();
+          return empty()
+        })
+      );
+  }
+
+  save(curso) {
+    if (curso.id) {
+      return this.update(curso);
+    }
+    return this.create(curso);
+  }
+
+  remove(id){
+    return this.http.delete(`${this.API}/${id}`)
+      .pipe(
+        take(1),
+        catchError(error => {
+          console.error(error);
+          this.handleError();
+          return empty()
+        })
+      );
+  }
+
   private handleError(message?: string) {
     this.alertService.showAlertDanger(message)
   }
