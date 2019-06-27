@@ -21,7 +21,7 @@ export class CursosListaComponent implements OnInit {
   cursoSelected: Curso;
   constructor(
     private service: CursoService,
-    private serviceAlert: AlertModalService,
+    private alertService: AlertModalService,
     private modalService: BsModalService,
     private router: Router,
     private route: ActivatedRoute
@@ -42,19 +42,20 @@ export class CursosListaComponent implements OnInit {
 
   onDelete(curso) {
     this.cursoSelected = curso
-    this.modalRef = this.modalService.show(this.deleteModal, { class: 'modal-sm' });
+    // this.modalRef = this.modalService.show(this.deleteModal, { class: 'modal-sm' });
+    this.alertService.showConfirm('Confirmação', 'Você tem certeza que deseja remover o curso?', 'Sim', 'Não')
   }
 
   onConfirmDelete() {
     this.service.remove(this.cursoSelected.id).subscribe(
       sucess => {
-        this.serviceAlert.showAlertSuccess();
+        this.alertService.showAlertSuccess();
         this.onRefresh();
         this.onDecline();
       },
       error => {
         this.onDecline();
-        this.serviceAlert.showAlertDanger()
+        this.alertService.showAlertDanger()
       },
     );
   }
